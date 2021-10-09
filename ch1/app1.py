@@ -56,7 +56,17 @@ assert(my_list.index(3)==2)
 
 
 
+my_list.extend([10,11,12])
+
+assert(my_list == [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12])
+
+
+my_list_copy= my_list.copy()
+
+my_list_copy[0]=5
 
 print(my_list)
+print(my_list_copy)
+
 
 
