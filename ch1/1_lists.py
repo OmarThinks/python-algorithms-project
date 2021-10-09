@@ -65,8 +65,22 @@ my_list_copy= my_list.copy()
 
 my_list_copy[0]=5
 
-print(my_list)
-print(my_list_copy)
+
+assert(my_list[0] 		== 1)
+assert(my_list_copy[0] 	== 5)
+
+
+
+my_list_equals = my_list
+
+
+my_list_equals[0]=700
+
+
+
+assert(my_list[0] 		== 700)
+assert(my_list_equals[0] 	== 700)
+
 
 
 
