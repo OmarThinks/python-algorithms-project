@@ -88,3 +88,5 @@ assert(my_list_equals[0] 	== 700)
 
 assert([x**2 for x in range(3)]==[0,1,4])
 
+
+print("hi".split(" "))
