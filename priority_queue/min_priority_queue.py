@@ -3,6 +3,7 @@ from random import randint
 
 import unittest
 from math import log
+import json
 
 assertEqual = unittest.TestCase().assertEqual
 
@@ -46,8 +47,24 @@ class MinPriorityQueue():
 			return None
 		return self.priority_queue[node_index]
 
+	def get_structure(self, node_index = 0):
+		node_value = self.get_node(node_index)
+		if node_value == None: # Base Case
+			return None
+		left_child_index, right_child_index = self.get_children_indices(node_index)
+		left_child_value, right_child_value = (self.get_node(left_child_index),
+			self.get_node(right_child_index),)
+		if left_child_value == right_child_value == None:
+			return node_value
+
+
+		return {str(node_value):[
+		self.get_structure(left_child_index),
+		self.get_structure(right_child_index)]
+		}
+
 	def print(self):
-		pp(self.priority_queue)
+		print(json.dumps(self.get_structure(), indent=4))
 
 
 
@@ -71,4 +88,8 @@ assertEqual(my_mpq.get_node_depth(6),2)
 assertEqual(my_mpq.get_node_depth(7),3)
 
 assertEqual(my_mpq.get_node(9), my_mpq.priority_queue[my_mpq.length-1])
+assertEqual(my_mpq.get_node(10), None)
+
+
+my_mpq.print()
 
