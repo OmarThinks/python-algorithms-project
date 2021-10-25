@@ -47,7 +47,9 @@ class MinPriorityQueue():
 		return int(log(node_index+1, 2))
 
 	def get_node(self, node_index):
-		if (node_index>= self.length) or (node_index<0) or (node_index == None):
+		if node_index == None:
+			return None
+		if (node_index>= self.length) or (node_index<0):
 			return None
 		return self.priority_queue[node_index]
 
@@ -109,7 +111,7 @@ class MinPriorityQueue():
 
 		self.priority_queue[node_index], self.priority_queue[parent_index]=(
 			parent_value, node_value)
-		push_up(parent_index)
+		self.push_up(parent_index)
 			
 
 	def insert(self, value):
@@ -145,7 +147,7 @@ class MinPriorityQueue():
 
 
 
-my_mpq = MinPriorityQueue([7654,1324,12,1,0,75,7,6,8,3])
+my_mpq = MinPriorityQueue([7654,1324,12,1,2,75,7,6,8,3])
 
 print(my_mpq.priority_queue)
 
@@ -175,6 +177,7 @@ assertEqual(my_mpq.find_node(70000), False)
 
 my_mpq.insert(900)
 my_mpq.insert(1900)
+my_mpq.insert(0)
 
 my_mpq.print()
 
