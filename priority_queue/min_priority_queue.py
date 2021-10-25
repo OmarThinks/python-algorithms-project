@@ -12,13 +12,17 @@ class MinPriorityQueue():
 	"""docstring for MinPriorityQueue"""
 	priority_queue = []
 	length = 0
+	
 	def __init__(self, priority_queue:list):
-		self.priority_queue = sorted(priority_queue, reverse=True)
+		self.priority_queue = sorted(priority_queue)
 		self.length = len(self.priority_queue)
 	
 	def get_parent_index(self, node_index, do_assertions = True):
 		if node_index == 0 or None: return None
 		
+		if node_index == None:
+			return None
+
 		parent_index = int((node_index+1)/2)-1
 
 		if do_assertions:
@@ -81,11 +85,27 @@ class MinPriorityQueue():
 		return (self.find_node(node_value, left_child_index) or 
 			self.find_node(node_value, right_child_index))
 
-	def find_node_depth(self, node_index):
-		pass
+	def insert(self, value):
+		empty_index = self.find_node(None)
+		if empty_index >= len(self.priority_queue):
+			self.priority_queue.append(value)
+		else:
+			self.priority_queue[empty_index] = value
+		self.length +=1
 
-	def delete_node(self, node_value):
-		pass
+	"""def delete_node(self, node_value):
+		node_index = self.find_node(node_value)
+		if node_index == False: return # Node does not exist
+		left_child_index, right_child_index = self.get_children_indices(node_index)
+		left_child_value, right_child_value = (self.get_node(left_child_index),
+			self.get_node(right_child_index))
+		if left_child_value == left_child_value == None: # This can be deleted Easily
+			self.priority_queue[node_index] = None
+			self.length -=1
+		if left_child_value == None:
+			self.priority_queue[node_index] = 0# Edit later"""
+
+
 
 
 
@@ -95,8 +115,8 @@ print(my_mpq.priority_queue)
 
 my_mpq.print()
 
-pp([my_mpq.get_parent_index(node) for node in range(my_mpq.length)])
-pp([my_mpq.get_children_indices(node) for node in range(my_mpq.length)])
+#pp([my_mpq.get_parent_index(node) for node in range(my_mpq.length)])
+#pp([my_mpq.get_children_indices(node) for node in range(my_mpq.length)])
 
 
 
@@ -111,9 +131,15 @@ assertEqual(my_mpq.get_node_depth(7),3)
 
 assertEqual(my_mpq.get_node(9), my_mpq.priority_queue[my_mpq.length-1])
 assertEqual(my_mpq.get_node(10), None)
-assertEqual(my_mpq.find_node(3), 7)
+assertEqual(my_mpq.find_node(3), 2)
 assertEqual(my_mpq.find_node(70000), False)
 
 
+
+
+my_mpq.insert(900)
+my_mpq.insert(1900)
+
+my_mpq.print()
 
 
