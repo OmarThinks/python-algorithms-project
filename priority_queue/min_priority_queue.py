@@ -101,7 +101,6 @@ class MinPriorityQueue():
 			self.find_node(node_value, right_child_index))
 
 	def push_up(self, node_index):
-
 		node_value = self.get_node(node_index)
 		parent_index = self.get_parent_index(node_index)
 		parent_value = self.get_node(parent_index)
@@ -131,18 +130,9 @@ class MinPriorityQueue():
 		self.length +=1
 		self.push_up(empty_index)
 
-	"""def delete_node(self, node_value):
-		node_index = self.find_node(node_value)
-		if node_index == False: return # Node does not exist
-		left_child_index, right_child_index = self.get_children_indices(node_index)
-		left_child_value, right_child_value = (self.get_node(left_child_index),
-			self.get_node(right_child_index))
-		if left_child_value == left_child_value == None: # This can be deleted Easily
-			self.priority_queue[node_index] = None
-			self.length -=1
-		if left_child_value == None:
-			self.priority_queue[node_index] = 0# Edit later"""
 
+
+			
 
 
 
