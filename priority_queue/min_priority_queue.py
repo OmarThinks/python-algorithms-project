@@ -47,7 +47,7 @@ class MinPriorityQueue():
 		return int(log(node_index+1, 2))
 
 	def get_node(self, node_index):
-		if node_index>= self.length:
+		if (node_index>= self.length) or (node_index<0) or (node_index == None):
 			return None
 		return self.priority_queue[node_index]
 
@@ -70,9 +70,22 @@ class MinPriorityQueue():
 	def print(self):
 		print(json.dumps(self.get_structure(), indent=4))
 
+	# Must Be BFS
+	def find_node(self, node_value, root_indices = [0]):
+		children_indices = []
+		for parent_index in root_indices:
+			parent_value = self.get_node(parent_index)
+			if parent_value == node_value:
+				return parent_index
+			if parent_value == None:
+				continue
+			children_indices.extend(self.get_children_indices(parent_index))
+		if len(children_indices) == 0:
+			return False
+		return self.find_node(node_value, children_indices)
 
-	def find_node(self, node_value, root_index = 0):
 		current_value = self.get_node(root_index)
+		print(root_index, current_value)
 		if current_value==node_value: # Base Case
 			return root_index
 		if current_value == None: # Base Case
@@ -85,13 +98,36 @@ class MinPriorityQueue():
 		return (self.find_node(node_value, left_child_index) or 
 			self.find_node(node_value, right_child_index))
 
+	def push_up(self, node_index):
+
+		node_value = self.get_node(node_index)
+		parent_index = self.get_parent_index(node_index)
+		parent_value = self.get_node(parent_index)
+		if parent_value == None: return # reached top of list
+		print(node_value, parent_value)
+		if node_value > parent_value: return # It's ok, that's how it should be
+
+		self.priority_queue[node_index], self.priority_queue[parent_index]=(
+			parent_value, node_value)
+		push_up(parent_index)
+			
+
 	def insert(self, value):
+		print("insert")
+
 		empty_index = self.find_node(None)
+		#print(empty_index)
+		
+		#print(self.priority_queue)
+
 		if empty_index >= len(self.priority_queue):
 			self.priority_queue.append(value)
 		else:
 			self.priority_queue[empty_index] = value
+		#print(self.priority_queue)
+		#print(empty_index)
 		self.length +=1
+		self.push_up(empty_index)
 
 	"""def delete_node(self, node_value):
 		node_index = self.find_node(node_value)
