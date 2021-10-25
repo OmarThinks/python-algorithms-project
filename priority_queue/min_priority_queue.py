@@ -53,7 +53,7 @@ class MinPriorityQueue():
 			return None
 		left_child_index, right_child_index = self.get_children_indices(node_index)
 		left_child_value, right_child_value = (self.get_node(left_child_index),
-			self.get_node(right_child_index),)
+			self.get_node(right_child_index))
 		if left_child_value == right_child_value == None:
 			return node_value
 
@@ -67,9 +67,31 @@ class MinPriorityQueue():
 		print(json.dumps(self.get_structure(), indent=4))
 
 
+	def find_node(self, node_value, root_index = 0):
+		current_value = self.get_node(root_index)
+		if current_value==node_value: # Base Case
+			return root_index
+		if current_value == None: # Base Case
+			return False
+		
+		left_child_index, right_child_index = self.get_children_indices(root_index)
+
+		#print(root_index, self.get_children_indices(root_index))
+		#print(root_index, left_child_index)
+		return (self.find_node(node_value, left_child_index) or 
+			self.find_node(node_value, right_child_index))
+
+	def find_node_depth(self, node_index):
+		pass
+
+	def delete_node(self, node_value):
+		pass
 
 
-my_mpq = MinPriorityQueue([randint(0,1000) for _ in range(10)])
+
+my_mpq = MinPriorityQueue([7654,1324,12,1,0,75,7,6,8,3])
+
+print(my_mpq.priority_queue)
 
 my_mpq.print()
 
@@ -89,7 +111,9 @@ assertEqual(my_mpq.get_node_depth(7),3)
 
 assertEqual(my_mpq.get_node(9), my_mpq.priority_queue[my_mpq.length-1])
 assertEqual(my_mpq.get_node(10), None)
+assertEqual(my_mpq.find_node(3), 7)
+assertEqual(my_mpq.find_node(70000), False)
 
 
-my_mpq.print()
+
 
